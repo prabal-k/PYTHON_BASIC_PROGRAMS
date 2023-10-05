@@ -14,6 +14,9 @@ frame.pack()
 random_numlabel = tk.Label(frame,text="number is ", font=("Ink free", 30))
 random_numlabel.grid(row=1,column=0,columnspan=2)
 
+input_entry = tk.Entry(frame)
+input_entry.grid(row=3,column=1)
+
 
 def display():
     global number
@@ -27,19 +30,22 @@ def checkguess():
     try:
         guess=input_entry.get()
         guess=int(guess)
-        if chance>=0:
-            if guess >-1 and guess<100 :
+        if chance>0:
+            if guess >=0 and guess<=100 :
                 if guess==number:
                     label.config(text=f"Congratulation your guess is correct .Number is {number}",fg="green")
                     chance=5
                 elif(guess>number):
                     chance=chance-1
-                    label.config(text="your guess is high")
+                    label.config(text=f"your guess {guess} is high")
+                    input_entry.config(text="")
                 elif (guess < number):
                     chance=chance-1
-                    label.config(text="your guess is low")
+                    label.config(text=f"your guess {guess} is low")
+                    input_entry.config(text="")
             else:
                 label.config(text="Guess between (0-100)")
+                input_entry.config(text="")
         else:
             label.config(text=f"Game over number was {number}.Again press the generate number button",font=(10))
             chance=5
@@ -53,11 +59,10 @@ def checkguess():
 generate_randombutton=tk.Button(frame,text="Generate number",command=display,font=('Arial',20,"bold"),fg="blue",activeforeground="blue")
 generate_randombutton.grid(row=0,column=0,columnspan=2)
 
-guess_label=tk.Label(frame,text="Enter your guess: ",font=("Ink free",30))
+guess_label=tk.Label(frame,text="Guess number between(0-100) ",font=("Ink free",15,"bold"))
 guess_label.grid(row=3,column=0)
 
-input_entry = tk.Entry(frame)
-input_entry.grid(row=3,column=1)
+
 
 submit_button = tk.Button(frame,text="Submit",command=checkguess,font=('Arial',20,"bold"),fg="blue",activeforeground="blue")
 submit_button.grid(row=5,column=0,columnspan =2)

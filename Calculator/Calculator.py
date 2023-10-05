@@ -44,7 +44,6 @@ def one_clear():
 
 
 
-
 # buttons
 button_0=tk.Button(frame,text=0,width=8,font=("Ink free",20,"bold"),command=lambda :buttonpress(0),activebackground="red")
 button_0.grid(row=1,column=0)
