@@ -6,7 +6,7 @@ def dosomething(event):
 window=tk.Tk()
 window.geometry("300x300")
 # syntax for bind is window.bind(event,function)
-# window.bind("<Button-1>",dosomething)               #for left button click on mouse
+window.bind("<Button-1>",dosomething)               #for left button click on mouse
 
 # window.bind("<Button-2>",dosomething)             #for clicking on mouse wheel click
 
@@ -18,7 +18,7 @@ window.geometry("300x300")
 
 # window.bind("<Leave>",dosomething)                     # for when I leave the window
 
-window.bind("<Motion>",dosomething)                     # where i move the mouse
+# window.bind("<Motion>",dosomething)                     # where i move the mouse
 
 
 
