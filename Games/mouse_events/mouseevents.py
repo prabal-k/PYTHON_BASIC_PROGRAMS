@@ -16,9 +16,9 @@ window.geometry("300x300")
 
 # window.bind("<Enter>",dosomething)                      # for the position when i entered the window
 
-# window.bind("<Leave>",dosomething)                     # for when I leave the window
+window.bind("<Leave>",dosomething)                     # for when I leave the window
 
-window.bind("<Motion>",dosomething)                     # where i move the mouse
+# window.bind("<Motion>",dosomething)                     # where i move the mouse
 
 
 

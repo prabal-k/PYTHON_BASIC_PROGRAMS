@@ -4,6 +4,8 @@ import random
 
 xpos=0
 ypos=0
+colors=["red","green","blue"]
+num=0;
 
 def changeposition(event):
     global xpos, ypos
@@ -22,7 +24,11 @@ class simulaion:
         self.color=color
 
     def draw(self):
-        self.oval=canvas.create_oval(self.x1,self.y1,self.x2,self.y2,fill=self.color,outline="")
+        global num
+        self.oval=canvas.create_oval(self.x1,self.y1,self.x2,self.y2,fill=colors[num],outline="")
+        num=num+1
+        if(num==3):
+            num=0
 
     def move(self):
         global xpos,ypos
@@ -37,16 +43,40 @@ class simulaion:
             canvas.coords(self.oval, self.x1, self.y1, self.x2, self.y2)
 
         else:
-            if self.x1<xpos and self.x2<xpos:
+            # i am talking about self.x1 and self.y1
+            # 1st quadrant (<x,<y)
+            if (self.x1<=xpos and self.y1<=ypos):
                 self.x1 +=z
                 self.y1 +=z
                 self.x2 += z
                 self.y2 += z
-            if self.x1 > xpos and self.x2 > xpos:
+            # 2nd quadrant (>x,<y)
+            if self.x1 >= xpos and self.y1 <=ypos:
+                self.x1 -= z
+                self.y1 += z
+                self.x2 -= z
+                self.y2 += z
+            # 3rd quadrant (<x,>y)
+
+            if self.x1 <= xpos and self.y1 >= ypos:
+                self.x1 += z
+                self.y1 -= z
+                self.x2 += z
+                self.y2 -= z
+            # 4th quadrant (>x,>y)
+
+            if self.x1 >= xpos and self.y1 >= ypos:
                 self.x1 -= z
                 self.y1 -= z
                 self.x2 -= z
                 self.y2 -= z
+
+            # if self.x1==xpos :
+            #     self.x1+=z
+            #
+            # if self.y1==xpos :
+            #     self.x1+=z
+
 
             # if self.y1<ypos and self.y2>ypos:
             #     self.x1+=z
@@ -92,7 +122,7 @@ for i in range(0,850):
     particlesarrayr[i].draw()
     particlesarrayr[i].move()
 
-window.bind("<Button-1>",changeposition)
+window.bind("<Motion>",changeposition)
 
 
 
