@@ -1,3 +1,5 @@
+import math
+
 import pygame
 import random
 pygame.init()
@@ -9,20 +11,20 @@ pygame.display.set_caption("first pygame")               # set the title of wind
 
 color="#3efa7a"
 fps=60
+ballcoount=4
 # main function
 
 # coordinates of the circle
 
-class circle():
+class circle:
     def __init__(self):
-        self.xpos = random.randint(0, 800)
-        self.ypos = random.randint(0, 600)
+        self.xpos = random.randint(100,500)
+        self.ypos = random.randint(100,500)
         self.radius = random.randint(20, 60)
         self.xspeed = random.randint(-5, 5)
         self.yspeed = random.randint(-5, 5)
 
     def draw(self):
-        window.fill(color)
         pygame.draw.circle(window, center=(self.xpos, self.ypos), radius=self.radius, color="blue")
 
     def move(self):
@@ -30,17 +32,34 @@ class circle():
         self.ypos += self.yspeed
 
     def boundary_collision(self):
-        if (self.xpos + self.radius > width) or (self.xpos - self.radius < 0):
+        if (self.xpos + self.radius >= width) or (self.xpos - self.radius <= 0):
             self.xspeed = -self.xspeed
 
-        if (self.ypos + self.radius > height) or (self.ypos - self.radius < 0):
+        if (self.ypos + self.radius >= height) or (self.ypos - self.radius <= 0):
             self.yspeed = -self.yspeed
 
+    def collision(self,ballobject):
+        for item in ballobject:
+            if item!=self:
+                x=self.xpos-item.xpos
+                y=self.ypos-item.ypos
+                distance=math.sqrt(math.pow(x,2)+math.pow(y,2))
+                if(distance<self.radius+item.radius):
+                    # self.xspeed=-self.xspeed
+                    # self.yspeed=-self.yspeed
+                    # item.xspeed = -item.xspeed
+                    # item.yspeed = -item.yspeed
+                         # Swap the speeds of the two circles
+                    self.xspeed, item.xspeed = item.xspeed, self.xspeed
+                    self.yspeed, item.yspeed = item.yspeed, self.yspeed
 
-circle_obj1=circle()
-circle_obj2=circle()
-print(f"circle_obj: xpos={circle_obj1.xpos}, ypos={circle_obj1.ypos}")
-print(f"circle_obj2: xpos={circle_obj2.xpos}, ypos={circle_obj2.ypos}")
+
+
+
+ball_object=[]
+for i in range (0,ballcoount):
+    circle_obj = circle()
+    ball_object.append(circle_obj)
 
 clock=pygame.time.Clock()
 run=True
@@ -49,13 +68,15 @@ while run:                                          # to appear the window on th
     for event in pygame.event.get():                # get the event
         if event.type==pygame.QUIT:                 # if user presses the close button on the window =>close the window
             run=False
-    circle_obj1.draw()
-    circle_obj1.move()
-    circle_obj1.boundary_collision()
+    window.fill("red")  # each time one frame is draw,move and checked colliision the screen is cleared for each frame
 
-    circle_obj2.draw()
-    circle_obj2.move()
-    circle_obj2.boundary_collision()
+    for i in range(0,ballcoount):
+        ball_object[i].draw()
+        ball_object[i].move()
+        ball_object[i].boundary_collision()
+        ball_object[i].collision(ball_object)
+    # pygame.draw.circle(surface=window,center=(0,0),radius=10,color="blue");
+
     pygame.display.update()
 
 
