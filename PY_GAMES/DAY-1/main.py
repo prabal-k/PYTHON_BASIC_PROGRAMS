@@ -4,7 +4,7 @@ import pygame
 import random
 pygame.init()
 width=800
-height=600
+height=800
 window=pygame.display.set_mode((width,height))           #  setting the window to appear on the screen
 pygame.display.set_caption("first pygame")               # set the title of window
 
